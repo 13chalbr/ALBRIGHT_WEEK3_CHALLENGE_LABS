@@ -2,6 +2,8 @@
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics.Metrics;
 using System.Runtime.ConstrainedExecution;
+using System;
+using System.Security.Claims;
 
 namespace ALBRIGHT_WEEK3_CHALLENGE_LABS
 {
@@ -38,13 +40,32 @@ namespace ALBRIGHT_WEEK3_CHALLENGE_LABS
                 double complement = target - number;
                 if (checkedNumbers.Contains(complement))
                 {
-                    Console.WriteLine($"\nPair found! {number} + {complement} = {target}");
+                    Console.WriteLine($"\nPair found! {complement} + {number} = {target}");
                     return true;
                 }
                 checkedNumbers.Add(number);
             }
             return false;
         }
+        // 3.3 Method discussed in class using nested for loops:
+        static int[] SumToTarget2(double[] array, double target)
+        {
+            Console.WriteLine("\nUtilizing discussed class Method of nested for loops:");
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    if (array[i] + array[j] == target)
+                    {
+                        return new int[] { i, j };
+                        break;
+                    }
+                }
+            }
+            return null;
+        }
+
         static void Main(string[] args)
         {
             // 3.1C
@@ -86,7 +107,7 @@ namespace ALBRIGHT_WEEK3_CHALLENGE_LABS
 
                 for (int i = 0; i < stringLength; i++)
                 {
-                    if ((inputString2[i] >= '0') && (inputString2[i] <= '9')) //ascii values! 48-57
+                    if ((inputString2[i] >= '0') && (inputString2[i] <= '9')) //ascii values 48-57
                     {
                         sumTotal += (inputString2[i] - '0'); // subtracting the ascii value for 0 (48)
                     }
@@ -133,6 +154,20 @@ namespace ALBRIGHT_WEEK3_CHALLENGE_LABS
                 {
                     Console.WriteLine("No pair found...");
                 }
+
+                // Method discussed in Class with nested for loops:
+
+                int[] result = SumToTarget2(array, targetInput);
+
+                if (result != null)
+                {
+                    Console.WriteLine($"\nThe indicies of the above points are [{result[0]} , {result[1]}]");
+                }
+                else
+                {
+                    Console.WriteLine("No pair found...");
+                }
+
                 Console.WriteLine("\nDo you want to go again? (Y/N): ");
                 hold3 = Convert.ToChar(Console.ReadLine().ToLower());
             }
